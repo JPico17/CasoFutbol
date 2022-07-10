@@ -8,6 +8,9 @@ public class Equipo
     private String nombreEquipo;
     private int numJugadores;
     private Jugador[] jugadores;
+    private String nGoleador;
+    private int golesGoleador;
+    private int edadesProm;
 
     //Metodos
     public Equipo(String nom, int n)
@@ -21,17 +24,21 @@ public class Equipo
     {
         for(int i=0; i< numJugadores;i++)
         {
-            jugadores[i] = crearJugador();
+            jugadores[i] = crearJugador("",0,0,"");
         }
     }
 
-    public Jugador crearJugador()
+    public Jugador crearJugador(String n, int g, int e, String i)
     {
-        String nom = "";
-        int goles = 0;
+        String nom = n;
+        int goles = g;
+        int edad = e;
+        String posicion= i;
         nom = JOptionPane.showInputDialog("Nombre del jugador: ");
         goles = Integer.parseInt(JOptionPane.showInputDialog("Goles del jugador: "));
-        return new Jugador(nom, goles);
+        edad = Integer.parseInt(JOptionPane.showInputDialog("Edad del jugador: "));
+        posicion = JOptionPane.showInputDialog("Codigo del jugador: ");
+        return new Jugador(nom, goles, edad, posicion);
     }
 
     public int calcularTotalGoles()
@@ -39,8 +46,53 @@ public class Equipo
         int totalGolesEquipo = 0;
         for(int i=0; i<numJugadores; i++)
         {
-            totalGolesEquipo = totalGolesEquipo + jugadores[i].getGoles();
+            totalGolesEquipo += jugadores[i].getGoles();
+            if(jugadores[i].getGoles() > golesGoleador)
+            {
+                golesGoleador = jugadores[i].getGoles();
+                nGoleador = jugadores[i].getNombre();
+            }
         }
         return totalGolesEquipo;
     }
+    public int calcularMayorGoles()
+    {
+        for(int i=0; i<numJugadores; i++)
+        {
+            if(jugadores[i].getGoles() > golesGoleador)
+            {
+                golesGoleador = jugadores[i].getGoles();
+
+            }
+        }
+        return golesGoleador;
+    }
+    public String calcularGoleador()
+    {
+        for(int i=0; i<numJugadores; i++)
+        {
+            if(jugadores[i].getGoles() > golesGoleador)
+            {
+                golesGoleador = jugadores[i].getGoles();
+                nGoleador = jugadores[i].getNombre();
+            }
+        }
+        return nGoleador;
+    }
+    public int calcularPromedioEdades()
+    {
+        for(int i=0; i<numJugadores; i++)
+        {     
+            edadesProm += jugadores[i].getEdad();
+        }
+        edadesProm= edadesProm/numJugadores;
+        return edadesProm;
+    }
+
+    public String toString()
+    {
+        return nombreEquipo + "\nCantidad de jugadores " + numJugadores ;
+    }
+
+
 }
